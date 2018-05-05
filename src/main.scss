@@ -2,6 +2,18 @@ body {
   // line-height: 2;
 }
 
+.root {
+  display: flex;
+  justify-content: center;
+}
+
 .viewContainer {
-  background-color: red;
+  min-width: 300px;
+  background-color: #efefef;
+  .tradeForm{
+    input, select, .quote {
+      display: block;
+      margin: 10px;
+    }
+  }
 }
