@@ -1,8 +1,9 @@
 import {
-  ADD_ARTICLE,
   GET_MARKET_PRICE,
   ADD_USD_BALANCE,
-  SUBTRACT_USD_BALANCE
+  SUBTRACT_USD_BALANCE,
+  ADD_BITCOIN_BALANCE,
+  SUBTRACT_BITCOIN_BALANCE
 } from "../constants/action-types";
 
 const initialState = {
