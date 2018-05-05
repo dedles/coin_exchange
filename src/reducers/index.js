@@ -23,7 +23,6 @@ const rootReducer = (state = initialState, action) => {
         bitcoinBalance: state.bitcoinBalance + Number((action.payload / state.marketPrice).toFixed(8))
       })
     case BUY_DOLLARS:
-      debugger;
       return Object.assign({}, state, {
         usdBalance: Number(state.usdBalance + (action.payload * state.marketPrice)).toFixed(2),
         bitcoinBalance: state.bitcoinBalance - action.payload
