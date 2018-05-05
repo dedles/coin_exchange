@@ -68,6 +68,11 @@ $formPadding: 10px 10px 10px 20px;
       display: inline-block;
       font-size: 16px;
     }
+    .errorText {
+      padding: 10px;
+      font-style: italic;
+      color: red;
+    }
   }
 
 }

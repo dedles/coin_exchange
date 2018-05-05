@@ -9,7 +9,7 @@ window.store = store;
 const App = () => {
   return (
     <div>
-      <p>React here!</p>
+      <br/>
       <br/>
       <TradingView/>
     </div>

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   usdBalance: 156.12,
-  bitcoinBalance: 0.20000000,
+  bitcoinBalance: 0.00000000,
   marketPrice: null
 };
 

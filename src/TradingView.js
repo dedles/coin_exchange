@@ -20,31 +20,58 @@ class TradingView extends React.Component {
       // currencyTo: "BTC",
       currencyFrom: 'BTC',
       currencyTo: "USD",
-      tradeAmount: ""
+      tradeAmount: "",
+      errorText: '',
+      hasError: "",
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.displayQuote = this.displayQuote.bind(this);
+    this.checkError = this.checkError.bind(this);
   }
 
   componentDidMount(){
     this.props.getMarketPrice()
-
   }
 
   handleChange(value, stateItem) {
     this.setState({
-      [stateItem]: value
+      [stateItem]: value,
+      errorText: ""
     });
   }
 
+  checkError(from, to, amount){
+    if(from == "USD" && this.props.usdBalance < amount){
+      this.setState({
+        errorText: "You don't have this amount"
+      })
+      return true
+    }else if ( from === "BTC" && this.props.bitcoinBalance < amount){
+      this.setState({
+        errorText: "You don't have this amount"
+      })
+      return true
+    }else{
+      return false
+    }
+  }
+
   handleSubmit(e) {
-    e.preventDefault();
-    if(this.state.currencyFrom === 'USD' && this.state.currencyTo === "BTC"){
-      this.props.buyBitcoin(Number(this.state.tradeAmount))
-    }else if (this.state.currencyFrom === 'BTC' && this.state.currencyTo === "USD"){
-      this.props.buyDollars(Number(this.state.tradeAmount))
+    e.preventDefault(this.state.tradeAmount);
+    let {tradeAmount, currencyTo, currencyFrom} = this.state;
+    let hasError = this.checkError(currencyFrom, currencyTo, tradeAmount);
+    if(!hasError){
+      if(currencyFrom === 'USD' && currencyTo === "BTC"){
+        this.props.buyBitcoin(Number(tradeAmount))
+      }else if (currencyFrom === 'BTC' && currencyTo === "USD"){
+        this.props.buyDollars(Number(tradeAmount))
+      }
+    }else{
+      this.setState({
+        errorText: "You don't have this amount!"
+      })
     }
     this.setState({
       tradeAmount: ""
@@ -53,11 +80,12 @@ class TradingView extends React.Component {
 
   displayQuote(){
     let displayQuote = "Display quote";
-    let {currencyTo, currencyFrom} = this.state
-    if(this.state.tradeAmount && currencyTo == "BTC" && currencyFrom == "USD"){
-      displayQuote = (Number(this.state.tradeAmount) / this.props.marketPrice).toFixed(8)
-    } else if (this.state.tradeAmount && currencyTo == "USD" && currencyFrom == "BTC"){
-      displayQuote = Number(this.state.tradeAmount) * this.props.marketPrice
+    let {currencyTo, currencyFrom, tradeAmount} = this.state
+    if(tradeAmount && currencyTo == "BTC" && currencyFrom == "USD"){
+
+      displayQuote = (Number(tradeAmount) / this.props.marketPrice).toFixed(8)
+    } else if (tradeAmount && currencyTo == "USD" && currencyFrom == "BTC"){
+      displayQuote = Number(tradeAmount) * this.props.marketPrice
     }
 
     return displayQuote;
@@ -68,6 +96,7 @@ class TradingView extends React.Component {
   render() {
     let {usdBalance, bitcoinBalance} = this.props;
     let {currencyFrom, currencyTo, tradeAmount } = this.state;
+
     let quote = this.displayQuote()
     return (
       <div className="root">
@@ -109,6 +138,7 @@ class TradingView extends React.Component {
               Trade
             </button>
 
+            {this.state.errorText && <div className="errorText">{this.state.errorText}</div>}
           </form>
         </div>
 
