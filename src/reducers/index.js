@@ -1,5 +1,6 @@
 import {
   GET_MARKET_PRICE,
+  SET_MARKET_PRICE,
   ADD_USD_BALANCE,
   SUBTRACT_USD_BALANCE,
   ADD_BITCOIN_BALANCE,
@@ -14,6 +15,11 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_MARKET_PRICE:
+      console.log("SET_MARKET_PRICE action: ", action)
+      return Object.assign({}, state, {
+        marketPrice: action.payload
+      })
     case ADD_USD_BALANCE:
       return {...state, balance: usdBalance + action.payload}
     case SUBTRACT_USD_BALANCE:

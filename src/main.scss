@@ -10,10 +10,23 @@ body {
 .viewContainer {
   min-width: 300px;
   background-color: #efefef;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  .balance {
+    .currencyType{
+      font-weight: bold;
+    }
+  }
   .tradeForm{
     input, select, .quote {
       display: block;
-      margin: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 200px;
     }
   }
+
 }

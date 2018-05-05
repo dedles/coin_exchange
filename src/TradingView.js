@@ -1,5 +1,9 @@
 import React from "react";
 import {connect } from "react-redux";
+import axios from 'axios'
+import * as actions from "./actions/index.js"
+
+
 const mapStateToProps = state => {
   return {
     usdBalance: state.usdBalance,
@@ -20,6 +24,11 @@ class TradingView extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    // this.props.getMarketPrice()
+
+  }
+
   handleChange(value, stateItem) {
     this.setState({
       [stateItem]: value
@@ -28,7 +37,6 @@ class TradingView extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger;
   }
 
 
@@ -40,13 +48,10 @@ class TradingView extends React.Component {
         <div className="viewContainer">
           Account Balance
           <br/>
-          <p>
-            <span className="currencyType">USD</span> {usdBalance}
-          </p>
-          <p>
-            <span className="currencyType">BITCOIN</span> {bitcoinBalance}
-          </p>
-
+          <div className="balance">
+            <div><span className="currencyType">USD</span> {usdBalance}</div>
+            <div><span className="currencyType">BTC</span> {bitcoinBalance}</div>
+          </div>
           <form onSubmit={this.handleSubmit} className="tradeForm">
             Trade
             <select value={currencyFrom} onChange={(e) => this.handleChange(e.target.value, "currencyFrom")}>
@@ -59,7 +64,7 @@ class TradingView extends React.Component {
               <option value="BTC">BTC</option>
             </select>
             <div className="quote">
-              asdf
+              <em>quote</em>
             </div>
             <button type="submit" className="submit">
               Trade
@@ -73,4 +78,4 @@ class TradingView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(TradingView);
+export default connect(mapStateToProps, actions)(TradingView);
