@@ -3,10 +3,8 @@ import axios from "axios";
 import {
   GET_MARKET_PRICE,
   SET_MARKET_PRICE,
-  ADD_USD_BALANCE,
-  SUBTRACT_USD_BALANCE,
-  ADD_BITCOIN_BALANCE,
-  SUBTRACT_BITCOIN_BALANCE
+  BUY_BITCOIN,
+  BUY_DOLLARS
 } from "../constants/action-types";
 
 export function getMarketPrice(){
@@ -24,22 +22,13 @@ export const setMarketPrice = price => ({
   payload: price
 })
 
-export const addUSDBalance = newBalance => ({
-  type: ADD_USD_BALANCE,
-  payload: newBalance
-});
 
-export const subtractUSDBalance = newBalance => ({
-  type: SUBTRACT_USD_BALANCE,
-  payload: newBalance
-});
+export const buyBitcoin = amount => ({
+  type: BUY_BITCOIN,
+  payload: amount
+})
 
-export const addBitcoinBalance = newBalance => ({
-  type: ADD_BITCOIN_BALANCE,
-  payload: newBalance
-});
-
-export const subtractBitcoinBalance = newBalance => ({
-  type: SUBTRACT_BITCOIN_BALANCE,
-  payload: newBalance
-});
+export const buyDollars = amount => ({
+  type: BUY_DOLLARS,
+  payload: amount
+})

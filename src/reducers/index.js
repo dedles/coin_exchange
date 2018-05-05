@@ -1,33 +1,33 @@
 import {
   GET_MARKET_PRICE,
   SET_MARKET_PRICE,
-  ADD_USD_BALANCE,
-  SUBTRACT_USD_BALANCE,
-  ADD_BITCOIN_BALANCE,
-  SUBTRACT_BITCOIN_BALANCE
+  BUY_BITCOIN,
+  BUY_DOLLARS
 } from "../constants/action-types";
 
 const initialState = {
   usdBalance: 156.12,
-  bitcoinBalance: 0,
+  bitcoinBalance: 0.20000000,
   marketPrice: null
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MARKET_PRICE:
-      console.log("SET_MARKET_PRICE action: ", action)
       return Object.assign({}, state, {
         marketPrice: action.payload
       })
-    case ADD_USD_BALANCE:
-      return {...state, balance: usdBalance + action.payload}
-    case SUBTRACT_USD_BALANCE:
-      return {...state, balance: usdBalance - action.payload}
-    case ADD_BITCOIN_BALANCE:
-      return {...state, balance: bitcoinBalance + action.payload}
-    case SUBTRACT_USD_BALANCE:
-      return {...state, balance: bitcoinBalance - action.payload}
+    case BUY_BITCOIN:
+      return Object.assign({}, state, {
+        usdBalance: Number((state.usdBalance - action.payload).toFixed(2)),
+        bitcoinBalance: state.bitcoinBalance + Number((action.payload / state.marketPrice).toFixed(8))
+      })
+    case BUY_DOLLARS:
+      debugger;
+      return Object.assign({}, state, {
+        usdBalance: Number(state.usdBalance + (action.payload * state.marketPrice)).toFixed(2),
+        bitcoinBalance: state.bitcoinBalance - action.payload
+      })
     default:
       return state;
   };
